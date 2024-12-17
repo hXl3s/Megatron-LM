@@ -264,6 +264,7 @@ def topk_softmax_with_capacity(
         # Pre softmax
         scores = torch.softmax(logits, dim=-1, dtype=torch.float32).type_as(logits)
         probs, top_indices = torch.topk(scores, k=topk, dim=1)
+        probs /= probs.sum(dim=-1, keepdim=True)
     else:
         # Post softmax
         if topk == 1:
